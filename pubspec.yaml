@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
@@ -19,27 +20,29 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/fonts/
-    - assets/images/
+    - assets/fonts/Archivo/
+    - assets/images/icons/
+    - assets/images/logos/
+    - assets/images/backgrounds/
 
-fonts:
+  fonts:
     - family: Archivo
       fonts:
-        - asset: assets/fonts/Archivo-Thin.ttf
+        - asset: assets/fonts/Archivo/Archivo-Thin.ttf
           weight: 100
-        - asset: assets/fonts/Archivo-ExtraLight.ttf
+        - asset: assets/fonts/Archivo/Archivo-ExtraLight.ttf
           weight: 200
-        - asset: assets/fonts/Archivo-Light.ttf
+        - asset: assets/fonts/Archivo/Archivo-Light.ttf
           weight: 300
-        - asset: assets/fonts/Archivo-Regular.ttf
+        - asset: assets/fonts/Archivo/Archivo-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Archivo-Medium.ttf
+        - asset: assets/fonts/Archivo/Archivo-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Archivo-SemiBold.ttf
+        - asset: assets/fonts/Archivo/Archivo-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/Archivo-Bold.ttf
+        - asset: assets/fonts/Archivo/Archivo-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Archivo-ExtraBold.ttf
+        - asset: assets/fonts/Archivo/Archivo-ExtraBold.ttf
           weight: 800
-        - asset: assets/fonts/Archivo-Black.ttf
+        - asset: assets/fonts/Archivo/Archivo-Black.ttf
           weight: 900
