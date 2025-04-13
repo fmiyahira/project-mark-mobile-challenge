@@ -20,6 +20,7 @@ class WeatherPresenter extends GetxController {
   Rxn<WeatherModel> currentCityWeather = Rxn<WeatherModel>();
   Rx<bool> hasError = false.obs;
   late Timer timerCheckNeedsUpdate;
+  int currentIndex = 0;
 
   @override
   void onClose() {
@@ -35,6 +36,7 @@ class WeatherPresenter extends GetxController {
   }
 
   void setCurrentCityWeather(int index) {
+    currentIndex = index;
     if (listWeather.value != null && index < listWeather.value!.length) {
       currentCityWeather.value = listWeather.value![index];
     }
@@ -44,7 +46,8 @@ class WeatherPresenter extends GetxController {
     try {
       hasError.value = false;
       listWeather.value = await weatherInfoFacade.getWeatherInfoFromCities();
-      setCurrentCityWeather(0);
+
+      setCurrentCityWeather(currentIndex);
     } catch (e) {
       hasError.value = true;
     }

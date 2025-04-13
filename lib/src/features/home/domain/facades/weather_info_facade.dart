@@ -25,14 +25,9 @@ class WeatherInfoFacadeImpl implements WeatherInfoFacade {
   });
 
   List<WeatherModel> _cachedWeather = [];
-  DateTime? _lastMemoryCacheUpdate;
 
   @override
   Future<List<WeatherModel>> getWeatherInfoFromCities() async {
-    if (_isMemoryCacheValid()) {
-      return _cachedWeather;
-    }
-
     if (await _isLocalCacheValid()) {
       return _cachedWeather;
     }
@@ -40,33 +35,23 @@ class WeatherInfoFacadeImpl implements WeatherInfoFacade {
     return await _fetchAndSaveCacheWeatherData();
   }
 
-  // Verifica se o cache em memória é válido
-  bool _isMemoryCacheValid() {
-    if (_cachedWeather.isNotEmpty && _lastMemoryCacheUpdate != null) {
-      final Duration memoryCacheLifeTime = DateTime.now().difference(
-        _lastMemoryCacheUpdate!,
-      );
-
-      return memoryCacheLifeTime.inMinutes < 10;
-    }
-
-    return false;
-  }
-
   Future<bool> _isLocalCacheValid() async {
     final DateTime? lastUpdate = await getLastUpdateCacheUseCase();
-    if (lastUpdate != null) {
-      final Duration localCacheLifeTime = DateTime.now().difference(lastUpdate);
-
-      if (localCacheLifeTime.inMinutes < 10) {
-        _cachedWeather = await getWeatherInfoCacheUsecase();
-        _lastMemoryCacheUpdate = DateTime.now();
-
-        return _cachedWeather.isNotEmpty;
-      }
+    if (lastUpdate == null) {
+      return false;
     }
 
-    return false;
+    final Duration localCacheLifeTime = DateTime.now().difference(lastUpdate);
+    if (localCacheLifeTime.inMinutes > 10) {
+      return false;
+    }
+
+    if (_cachedWeather.isNotEmpty) {
+      return true;
+    }
+
+    _cachedWeather = await getWeatherInfoCacheUsecase();
+    return _cachedWeather.isNotEmpty;
   }
 
   Future<List<WeatherModel>> _fetchAndSaveCacheWeatherData() async {
@@ -74,7 +59,6 @@ class WeatherInfoFacadeImpl implements WeatherInfoFacade {
         await fetchUpdatedWeatherInfoUsecase();
 
     _cachedWeather = updatedWeather;
-    _lastMemoryCacheUpdate = DateTime.now();
 
     await saveWeatherInfoCacheUsecase(updatedWeather);
     await saveLastUpdateCacheUsecase(DateTime.now());

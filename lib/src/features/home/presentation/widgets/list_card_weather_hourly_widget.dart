@@ -41,7 +41,13 @@ class ListCardWeatherHourlyWidget extends StatelessWidget {
                     currentCityWeather.hourly[index];
 
                 return Padding(
-                  padding: EdgeInsets.only(left: index == 0 ? 0 : 10),
+                  padding: EdgeInsets.only(
+                    left: index == 0 ? 0 : 10,
+                    right:
+                        index == currentCityWeather.hourly.length - 1
+                            ? AppSpacing.lg
+                            : 0,
+                  ),
                   child: CardWeatherHourlyWidget(
                     hourlyWeatherModel: hourlyWeatherModel,
                   ),

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:weather_forecast/src/features/home/domain/models/city_model.dart';
 import 'package:weather_forecast/src/features/home/domain/models/daily_weather_model.dart';
 import 'package:weather_forecast/src/features/home/domain/models/hourly_weather_model.dart';
