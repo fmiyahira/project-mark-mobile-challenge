@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:weather_forecast/src/features/home/domain/enums/weather_condition_enum.dart';
 
 class HourlyWeatherModel {
@@ -11,13 +12,31 @@ class HourlyWeatherModel {
     required this.weatherConditionEnum,
   });
 
-  factory HourlyWeatherModel.fromJson(Map<String, dynamic> json) {
+  factory HourlyWeatherModel.fromMap(Map<String, dynamic> map) {
     return HourlyWeatherModel(
-      temp: (json['temp'] as num).toDouble(),
-      date: DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000).toLocal(),
+      temp: (map['temp'] as num).toDouble(),
+      date: DateTime.fromMillisecondsSinceEpoch(map['dt'] * 1000).toLocal(),
       weatherConditionEnum: WeatherConditionEnum.fromString(
-        json['weather'][0]['main'],
+        map['weather'][0]['main'],
       ),
     );
+  }
+
+  factory HourlyWeatherModel.fromJson(Map<String, dynamic> json) {
+    return HourlyWeatherModel(
+      temp: json['temp'] as double,
+      date: DateTime.fromMillisecondsSinceEpoch(json['date'] as int),
+      weatherConditionEnum: WeatherConditionEnum.fromString(
+        json['weatherConditionEnum'],
+      ),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'temp': temp,
+      'date': date.millisecondsSinceEpoch,
+      'weatherConditionEnum': weatherConditionEnum.condition,
+    };
   }
 }

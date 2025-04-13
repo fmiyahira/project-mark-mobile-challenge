@@ -23,7 +23,9 @@ class WeatherInfoDatasourceImpl implements WeatherInfoDatasource {
     );
 
     if (response.statusCode == 200) {
-      return WeatherModel.fromJson(cityModel, response.data);
+      dynamic data = response.data;
+      data['city'] = cityModel.toMap();
+      return WeatherModel.fromMap(data);
     } else {
       throw Exception(response.message);
     }

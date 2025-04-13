@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:weather_forecast/src/features/home/domain/models/city_model.dart';
 import 'package:weather_forecast/src/features/home/domain/models/daily_weather_model.dart';
 import 'package:weather_forecast/src/features/home/domain/models/hourly_weather_model.dart';
@@ -19,24 +20,51 @@ class WeatherModel {
     required this.daily,
   });
 
-  factory WeatherModel.fromJson(
-    CityModel cityModel,
-    Map<String, dynamic> json,
-  ) {
+  factory WeatherModel.fromMap(Map<String, dynamic> map) {
     return WeatherModel(
-      city: cityModel,
-      currentTemp: (json['current']['temp'] as num).toDouble(),
-      humidity: json['current']['humidity'],
-      pressure: json['current']['pressure'],
+      city: CityModel.fromMap(map['city']),
+      currentTemp: (map['current']['temp'] as num).toDouble(),
+      humidity: map['current']['humidity'],
+      pressure: map['current']['pressure'],
       hourly:
           List.from(
-            json['hourly'] as List,
-          ).map((hour) => HourlyWeatherModel.fromJson(hour)).toList(),
+            map['hourly'] as List,
+          ).map((hour) => HourlyWeatherModel.fromMap(hour)).toList(),
       daily:
           List.from(
-            json['daily'] as List,
-          ).map((day) => DailyWeatherModel.fromJson(day)).toList(),
+            map['daily'] as List,
+          ).map((day) => DailyWeatherModel.fromMap(day)).toList(),
     );
+  }
+
+  factory WeatherModel.fromJson(Map<String, dynamic> json) {
+    return WeatherModel(
+      city: CityModel.fromJson(json['city'] as Map<String, dynamic>),
+      currentTemp: json['currentTemp'] as double,
+      humidity: json['humidity'] as int,
+      pressure: json['pressure'] as int,
+      hourly: List<HourlyWeatherModel>.from(
+        (json['hourly'] as List).map<HourlyWeatherModel>(
+          (x) => HourlyWeatherModel.fromJson(x as Map<String, dynamic>),
+        ),
+      ),
+      daily: List<DailyWeatherModel>.from(
+        (json['daily'] as List).map<DailyWeatherModel>(
+          (x) => DailyWeatherModel.fromJson(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'city': city.toMap(),
+      'currentTemp': currentTemp,
+      'humidity': humidity,
+      'pressure': pressure,
+      'hourly': hourly.map((x) => x.toMap()).toList(),
+      'daily': daily.map((x) => x.toMap()).toList(),
+    };
   }
 
   WeatherModel copyWith({

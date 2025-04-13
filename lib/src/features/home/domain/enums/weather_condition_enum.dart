@@ -1,13 +1,14 @@
 import 'package:weather_forecast/src/core/theme/app_assets.dart';
 
 enum WeatherConditionEnum {
-  sunny(AppAssets.sunnyIcon),
-  lightning(AppAssets.lightningIcon),
-  rainy(AppAssets.rainyIcon),
-  cloudy(AppAssets.cloudyIcon);
+  sunny(AppAssets.sunnyIcon, 'Clear'),
+  lightning(AppAssets.lightningIcon, 'Thunderstorm'),
+  rainy(AppAssets.rainyIcon, 'Rain'),
+  cloudy(AppAssets.cloudyIcon, 'Clouds');
 
   final String asset;
-  const WeatherConditionEnum(this.asset);
+  final String condition;
+  const WeatherConditionEnum(this.asset, this.condition);
 
   factory WeatherConditionEnum.fromString(String condition) {
     switch (condition) {
