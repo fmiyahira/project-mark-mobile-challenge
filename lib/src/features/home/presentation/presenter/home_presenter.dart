@@ -11,11 +11,19 @@ class WeatherPresenter extends GetxController {
 
   var isLoading = false.obs;
   Rxn<List<WeatherModel>> listWeather = Rxn<List<WeatherModel>>();
+  Rxn<WeatherModel> currentCityWeather = Rxn<WeatherModel>();
+
+  void setCurrentCityWeather(int index) {
+    if (listWeather.value != null && index < listWeather.value!.length) {
+      currentCityWeather.value = listWeather.value![index];
+    }
+  }
 
   Future<void> fetchWeather() async {
     try {
       isLoading.value = true;
       listWeather.value = await weatherInfoFacade.getWeatherInfoFromCities();
+      setCurrentCityWeather(0);
     } catch (e) {
     } finally {
       isLoading.value = false;

@@ -20,12 +20,14 @@ class CarouselCardWeatherCurrentWidget extends StatelessWidget {
         SizedBox(
           height: 194,
           child: Obx(() {
+            final List<WeatherModel>? listWeather = presenter.listWeather.value;
+
             return PageView.builder(
-              itemCount: presenter.listWeather.value?.length ?? 0,
+              itemCount: listWeather?.length ?? 0,
               controller: controller,
+              onPageChanged: presenter.setCurrentCityWeather,
               itemBuilder: (BuildContext context, int index) {
-                final WeatherModel weather =
-                    presenter.listWeather.value![index];
+                final WeatherModel weather = listWeather![index];
                 return CardWeatherCurrentWidget(weather: weather);
               },
             );

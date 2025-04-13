@@ -1,40 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:weather_forecast/src/core/theme/app_assets.dart';
+import 'package:intl/intl.dart';
+import 'package:weather_forecast/src/core/shared/ui/widgets/custom_animation_transition_widget.dart';
 import 'package:weather_forecast/src/core/theme/app_colors.dart';
 import 'package:weather_forecast/src/core/theme/app_spacing.dart';
 import 'package:weather_forecast/src/core/theme/app_text_styles.dart';
+import 'package:weather_forecast/src/features/home/domain/models/hourly_weather_model.dart';
 
 class CardWeatherHourlyWidget extends StatelessWidget {
-  const CardWeatherHourlyWidget({super.key});
+  final HourlyWeatherModel hourlyWeatherModel;
+  const CardWeatherHourlyWidget({super.key, required this.hourlyWeatherModel});
 
   @override
   Widget build(BuildContext context) {
+    final bool isFromNow = hourlyWeatherModel.date.hour == DateTime.now().hour;
+    final String formattedTime = DateFormat(
+      'hh:mm a',
+    ).format(hourlyWeatherModel.date);
+
     return Container(
       height: 118,
       width: 87,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
-        color: AppColors.backgroundActive.withValues(alpha: .25),
+        color:
+            isFromNow
+                ? AppColors.backgroundActive.withValues(alpha: .25)
+                : AppColors.backgroundInactive,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Now',
-            style: AppTextStyles.bodyText2.copyWith(color: AppColors.secondary),
+      child: CustomAnimationTransitionWidget(
+        child: Column(
+          key: ValueKey(
+            'block-hourly-${hourlyWeatherModel.date}-${hourlyWeatherModel.temp}',
           ),
-          SvgPicture.asset(
-            AppAssets.sunnyIcon,
-            width: AppSpacing.iconHeight,
-            height: AppSpacing.iconHeight,
-          ),
-          Text(
-            '4° C',
-            style: AppTextStyles.bodyText2.copyWith(color: AppColors.secondary),
-          ),
-        ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              isFromNow ? 'Now' : formattedTime,
+              style: AppTextStyles.bodyText2.copyWith(
+                color:
+                    isFromNow ? AppColors.secondary : AppColors.primaryLightest,
+              ),
+            ),
+            SvgPicture.asset(
+              hourlyWeatherModel.weatherConditionEnum.asset,
+              width: AppSpacing.iconWidth,
+              colorFilter: ColorFilter.mode(
+                isFromNow ? AppColors.secondary : AppColors.primaryLightest,
+                BlendMode.srcIn,
+              ),
+            ),
+            Text(
+              '${hourlyWeatherModel.temp.round()}° C',
+              style: AppTextStyles.bodyText2.copyWith(
+                color:
+                    isFromNow ? AppColors.secondary : AppColors.primaryLightest,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

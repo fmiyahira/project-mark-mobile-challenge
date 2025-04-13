@@ -6,5 +6,6 @@ class AppSpacing {
 
   static const double appBarHeight = 77.0;
   static const double logoHeight = 41.0;
-  static const double iconHeight = 34.0;
+  static const double iconWidth = 34.0;
+  static const double listTileHeight = 34.0;
 }

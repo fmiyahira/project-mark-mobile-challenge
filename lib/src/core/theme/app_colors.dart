@@ -13,7 +13,7 @@ class AppColors {
   // Background Colors
   static const Color background = Color(0xFFF7FAFC);
   static const Color backgroundActive = Color(0xFFF6AD55);
-  static const Color backgroundIactive = Color(0xFFEDF2F7);
+  static const Color backgroundInactive = Color(0xFFEDF2F7);
   static const Color surfaceBlueStart = Color(0xFF8ACDE2);
   static const Color surfaceBlueEnd = Color(0xFF53B6D7);
   static const Color surfaceOrangeStart = Color(0xFFFF5108);
