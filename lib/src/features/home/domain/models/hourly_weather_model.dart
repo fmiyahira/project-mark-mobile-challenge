@@ -14,7 +14,7 @@ class HourlyWeatherModel {
   factory HourlyWeatherModel.fromJson(Map<String, dynamic> json) {
     return HourlyWeatherModel(
       temp: (json['temp'] as num).toDouble(),
-      date: DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000),
+      date: DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000).toLocal(),
       weatherConditionEnum: WeatherConditionEnum.fromString(
         json['weather'][0]['main'],
       ),

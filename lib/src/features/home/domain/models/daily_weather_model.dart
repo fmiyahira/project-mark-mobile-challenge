@@ -17,7 +17,7 @@ class DailyWeatherModel {
     return DailyWeatherModel(
       minTemp: (json['temp']['min'] as num).toDouble(),
       maxTemp: (json['temp']['max'] as num).toDouble(),
-      date: DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000),
+      date: DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000).toLocal(),
       weatherConditionEnum: WeatherConditionEnum.fromString(
         json['weather'][0]['main'],
       ),

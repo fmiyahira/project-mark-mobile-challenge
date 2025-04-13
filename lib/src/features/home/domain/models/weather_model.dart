@@ -38,4 +38,22 @@ class WeatherModel {
           ).map((day) => DailyWeatherModel.fromJson(day)).toList(),
     );
   }
+
+  WeatherModel copyWith({
+    CityModel? city,
+    double? currentTemp,
+    int? humidity,
+    int? pressure,
+    List<HourlyWeatherModel>? hourly,
+    List<DailyWeatherModel>? daily,
+  }) {
+    return WeatherModel(
+      city: city ?? this.city,
+      currentTemp: currentTemp ?? this.currentTemp,
+      humidity: humidity ?? this.humidity,
+      pressure: pressure ?? this.pressure,
+      hourly: hourly ?? this.hourly,
+      daily: daily ?? this.daily,
+    );
+  }
 }

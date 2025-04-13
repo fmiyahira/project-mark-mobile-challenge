@@ -5,12 +5,14 @@ import 'package:weather_forecast/src/features/home/domain/models/weather_model.d
 class WeatherPresenter extends GetxController {
   final WeatherInfoFacade weatherInfoFacade;
 
-  WeatherPresenter({required this.weatherInfoFacade});
+  WeatherPresenter({required this.weatherInfoFacade}) {
+    fetchWeather();
+  }
 
   var isLoading = false.obs;
   Rxn<List<WeatherModel>> listWeather = Rxn<List<WeatherModel>>();
 
-  Future<void> fetchWeather(String cityName) async {
+  Future<void> fetchWeather() async {
     try {
       isLoading.value = true;
       listWeather.value = await weatherInfoFacade.getWeatherInfoFromCities();

@@ -6,7 +6,8 @@ import 'package:weather_forecast/src/features/home/data/repositories/weather_inf
 import 'package:weather_forecast/src/features/home/domain/facades/weather_info_facade.dart';
 import 'package:weather_forecast/src/features/home/domain/repositories/weather_info_repository.dart';
 import 'package:weather_forecast/src/features/home/domain/usecases/fetch_updated_weather_info_usecase.dart';
-import 'package:weather_forecast/src/features/home/domain/usecases/fetch_weather_info_usecase.dart';
+import 'package:weather_forecast/src/features/home/domain/usecases/fetch_weather_from_city_usecase.dart';
+import 'package:weather_forecast/src/features/home/domain/usecases/treat_weather_info_usecase.dart';
 import 'package:weather_forecast/src/features/home/external/datasources/weather_info_datasource_impl.dart';
 import 'package:weather_forecast/src/features/home/presentation/presenter/home_presenter.dart';
 
@@ -29,9 +30,11 @@ class RegisterDependencies {
     Get.lazyPut<FetchWeatherFromCityUsecase>(
       () => FetchWeatherFromCityUsecaseImpl(repository: Get.find()),
     );
+    Get.lazyPut<TreatWeatherInfoUsecase>(() => TreatWeatherInfoUsecaseImpl());
     Get.lazyPut<FetchUpdatedWeatherInfoUsecase>(
       () => FetchUpdatedWeatherInfoUsecaseImpl(
         fetchWeatherFromCityUsecase: Get.find(),
+        treatWeatherInfoUsecase: Get.find(),
       ),
     );
 
