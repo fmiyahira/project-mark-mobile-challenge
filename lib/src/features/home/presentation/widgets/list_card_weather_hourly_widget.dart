@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' show Obx;
 import 'package:get/instance_manager.dart';
+import 'package:weather_forecast/src/core/shared/ui/widgets/custom_shimmer_widget.dart';
 import 'package:weather_forecast/src/core/theme/app_spacing.dart';
 import 'package:weather_forecast/src/features/home/domain/models/hourly_weather_model.dart';
 import 'package:weather_forecast/src/features/home/domain/models/weather_model.dart';
@@ -27,13 +28,17 @@ class ListCardWeatherHourlyWidget extends StatelessWidget {
             final WeatherModel? currentCityWeather =
                 presenter.currentCityWeather.value;
 
+            if (currentCityWeather == null) {
+              return CustomShimmerWidget(height: 118);
+            }
+
             return ListView.builder(
               padding: const EdgeInsets.only(left: AppSpacing.lg),
               scrollDirection: Axis.horizontal,
-              itemCount: currentCityWeather?.hourly.length ?? 0,
+              itemCount: currentCityWeather.hourly.length,
               itemBuilder: (BuildContext context, int index) {
                 final HourlyWeatherModel hourlyWeatherModel =
-                    currentCityWeather!.hourly[index];
+                    currentCityWeather.hourly[index];
 
                 return Padding(
                   padding: EdgeInsets.only(left: index == 0 ? 0 : 10),

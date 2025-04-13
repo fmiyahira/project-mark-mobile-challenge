@@ -5,4 +5,6 @@ class HomePageStrings {
   static const String pressure = 'Pressure';
   static const String pressureUnit = 'hPa';
   static const String currentDay = 'Today';
+  static const String errorMessage = 'Falha ao carregar dados';
+  static const String tryAgain = 'Try Again';
 }

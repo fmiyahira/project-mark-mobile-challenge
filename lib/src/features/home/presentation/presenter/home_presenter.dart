@@ -7,13 +7,18 @@ import 'package:weather_forecast/src/features/home/domain/models/weather_model.d
 class WeatherPresenter extends GetxController {
   final WeatherInfoFacade weatherInfoFacade;
 
-  WeatherPresenter({required this.weatherInfoFacade}) {
-    _fetchWeather();
+  WeatherPresenter({required this.weatherInfoFacade});
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchWeather();
     _startWeatherUpdateTimer();
   }
 
   Rxn<List<WeatherModel>> listWeather = Rxn<List<WeatherModel>>();
   Rxn<WeatherModel> currentCityWeather = Rxn<WeatherModel>();
+  Rx<bool> hasError = false.obs;
   late Timer timerCheckNeedsUpdate;
 
   @override
@@ -25,7 +30,7 @@ class WeatherPresenter extends GetxController {
   void _startWeatherUpdateTimer() {
     timerCheckNeedsUpdate = Timer.periodic(
       const Duration(minutes: 1),
-      (Timer timer) => _fetchWeather(),
+      (Timer timer) => fetchWeather(),
     );
   }
 
@@ -35,12 +40,13 @@ class WeatherPresenter extends GetxController {
     }
   }
 
-  Future<void> _fetchWeather() async {
+  Future<void> fetchWeather() async {
     try {
+      hasError.value = false;
       listWeather.value = await weatherInfoFacade.getWeatherInfoFromCities();
       setCurrentCityWeather(0);
     } catch (e) {
-      print(e);
-    } finally {}
+      hasError.value = true;
+    }
   }
 }

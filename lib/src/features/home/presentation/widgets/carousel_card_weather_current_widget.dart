@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' show Obx;
 import 'package:get/instance_manager.dart';
+import 'package:weather_forecast/src/core/shared/ui/widgets/custom_shimmer_widget.dart';
 import 'package:weather_forecast/src/core/shared/ui/widgets/page_view_indicator_widget.dart';
 import 'package:weather_forecast/src/core/theme/app_spacing.dart';
 import 'package:weather_forecast/src/features/home/domain/models/weather_model.dart';
@@ -15,27 +16,31 @@ class CarouselCardWeatherCurrentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final WeatherPresenter presenter = Get.find<WeatherPresenter>();
 
-    return Column(
-      children: [
-        SizedBox(
-          height: 194,
-          child: Obx(() {
-            final List<WeatherModel>? listWeather = presenter.listWeather.value;
+    return Obx(() {
+      final List<WeatherModel>? listWeather = presenter.listWeather.value;
 
-            return PageView.builder(
-              itemCount: listWeather?.length ?? 0,
+      if (listWeather == null || listWeather.isEmpty) {
+        return CustomShimmerWidget(height: 224);
+      }
+
+      return Column(
+        children: [
+          SizedBox(
+            height: 194,
+            child: PageView.builder(
+              itemCount: listWeather.length,
               controller: controller,
               onPageChanged: presenter.setCurrentCityWeather,
               itemBuilder: (BuildContext context, int index) {
-                final WeatherModel weather = listWeather![index];
+                final WeatherModel weather = listWeather[index];
                 return CardWeatherCurrentWidget(weather: weather);
               },
-            );
-          }),
-        ),
-        SizedBox(height: AppSpacing.sm),
-        PageViewIndicatorWidget(controller: controller),
-      ],
-    );
+            ),
+          ),
+          SizedBox(height: AppSpacing.sm),
+          PageViewIndicatorWidget(controller: controller),
+        ],
+      );
+    });
   }
 }

@@ -83,6 +83,8 @@ class RegisterDependencies {
     );
 
     // Presenters
-    Get.put<WeatherPresenter>(WeatherPresenter(weatherInfoFacade: Get.find()));
+    Get.lazyPut<WeatherPresenter>(
+      () => WeatherPresenter(weatherInfoFacade: Get.find()),
+    );
   }
 }

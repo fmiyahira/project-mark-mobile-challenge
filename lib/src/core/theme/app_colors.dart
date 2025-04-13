@@ -9,6 +9,7 @@ class AppColors {
 
   // Secondary Colors
   static const Color secondary = Color(0xFFF6AD55);
+  static const Color error = Colors.red;
 
   // Background Colors
   static const Color background = Color(0xFFF7FAFC);
