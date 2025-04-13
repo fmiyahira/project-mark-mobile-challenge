@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:weather_forecast/src/core/register_dependencies.dart';
 import 'package:weather_forecast/src/features/home/presentation/pages/home_page.dart';
 
 void main() {
+  RegisterDependencies.init();
+
   runApp(const MyApp());
 }
 
