@@ -8,7 +8,7 @@ class RequestHttpDioImpl implements RequestClient {
   RequestHttpDioImpl()
     : _dio = Dio(
         BaseOptions(
-          baseUrl: 'https://api.openweathermap.org/data/3.0/onecall',
+          baseUrl: 'https://api.openweathermap.org/data/',
           connectTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
         ),
