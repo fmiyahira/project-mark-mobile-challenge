@@ -15,9 +15,8 @@ class CardWeatherHourlyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isFromNow = hourlyWeatherModel.date.hour == DateTime.now().hour;
-    final String formattedTime = DateFormat(
-      'hh:mm a',
-    ).format(hourlyWeatherModel.date);
+    final String formattedTime =
+        DateFormat('hha').format(hourlyWeatherModel.date).toLowerCase();
 
     return Container(
       height: 118,
