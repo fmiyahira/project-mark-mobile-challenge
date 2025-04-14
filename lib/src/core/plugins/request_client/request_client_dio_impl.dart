@@ -2,17 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:weather_forecast/src/core/plugins/request_client/request_client.dart';
 import 'package:weather_forecast/src/core/plugins/request_client/request_client_response.dart';
 
-class RequestHttpDioImpl implements RequestClient {
+class RequestClientDioImpl implements RequestClient {
   final Dio _dio;
-
-  RequestHttpDioImpl()
-    : _dio = Dio(
-        BaseOptions(
-          baseUrl: 'https://api.openweathermap.org/data/',
-          connectTimeout: const Duration(seconds: 10),
-          receiveTimeout: const Duration(seconds: 10),
-        ),
-      );
+  RequestClientDioImpl(this._dio);
 
   @override
   Future<RequestResponse> get(

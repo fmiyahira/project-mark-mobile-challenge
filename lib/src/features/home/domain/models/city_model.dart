@@ -1,10 +1,12 @@
-class CityModel {
+import 'package:equatable/equatable.dart';
+
+class CityModel extends Equatable {
   final String name;
   final String state;
   final double lat;
   final double long;
 
-  CityModel({
+  const CityModel({
     required this.name,
     required this.state,
     required this.lat,
@@ -37,4 +39,7 @@ class CityModel {
       'long': long,
     };
   }
+
+  @override
+  List<Object?> get props => [name, state, lat, long];
 }

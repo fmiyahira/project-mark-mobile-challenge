@@ -6,6 +6,7 @@ import 'package:weather_forecast/src/core/theme/app_colors.dart';
 import 'package:weather_forecast/src/core/theme/app_spacing.dart';
 import 'package:weather_forecast/src/core/theme/app_text_styles.dart';
 import 'package:weather_forecast/src/features/home/domain/models/hourly_weather_model.dart';
+import 'package:weather_forecast/src/features/home/presentation/strings/home_page_strings.dart';
 
 class CardWeatherHourlyWidget extends StatelessWidget {
   final HourlyWeatherModel hourlyWeatherModel;
@@ -37,7 +38,7 @@ class CardWeatherHourlyWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              isFromNow ? 'Now' : formattedTime,
+              isFromNow ? HomePageStrings.now : formattedTime,
               style: AppTextStyles.bodyText2.copyWith(
                 color:
                     isFromNow ? AppColors.secondary : AppColors.primaryLightest,

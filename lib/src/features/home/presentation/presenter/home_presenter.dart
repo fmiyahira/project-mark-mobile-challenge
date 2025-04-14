@@ -4,10 +4,18 @@ import 'package:get/get.dart';
 import 'package:weather_forecast/src/features/home/domain/facades/weather_info_facade.dart';
 import 'package:weather_forecast/src/features/home/domain/models/weather_model.dart';
 
-class WeatherPresenter extends GetxController {
+abstract class IHomePresenter {
+  Rxn<List<WeatherModel>> get listWeather;
+  Rxn<WeatherModel> get currentCityWeather;
+  Rx<bool> get hasError;
+  Future<void> fetchWeather();
+  void setCurrentCityWeather(int index);
+}
+
+class HomePresenter extends GetxController implements IHomePresenter {
   final WeatherInfoFacade weatherInfoFacade;
 
-  WeatherPresenter({required this.weatherInfoFacade});
+  HomePresenter({required this.weatherInfoFacade});
 
   @override
   void onInit() {
@@ -16,9 +24,15 @@ class WeatherPresenter extends GetxController {
     _startWeatherUpdateTimer();
   }
 
+  @override
   Rxn<List<WeatherModel>> listWeather = Rxn<List<WeatherModel>>();
+
+  @override
   Rxn<WeatherModel> currentCityWeather = Rxn<WeatherModel>();
+
+  @override
   Rx<bool> hasError = false.obs;
+
   late Timer timerCheckNeedsUpdate;
   int currentIndex = 0;
 
@@ -35,6 +49,7 @@ class WeatherPresenter extends GetxController {
     );
   }
 
+  @override
   void setCurrentCityWeather(int index) {
     currentIndex = index;
     if (listWeather.value != null && index < listWeather.value!.length) {
@@ -42,6 +57,7 @@ class WeatherPresenter extends GetxController {
     }
   }
 
+  @override
   Future<void> fetchWeather() async {
     try {
       hasError.value = false;

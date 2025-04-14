@@ -1,12 +1,13 @@
+import 'package:equatable/equatable.dart';
 import 'package:weather_forecast/src/features/home/domain/enums/weather_condition_enum.dart';
 
-class DailyWeatherModel {
+class DailyWeatherModel extends Equatable {
   final double minTemp;
   final double maxTemp;
   final DateTime date;
   final WeatherConditionEnum weatherConditionEnum;
 
-  DailyWeatherModel({
+  const DailyWeatherModel({
     required this.minTemp,
     required this.maxTemp,
     required this.date,
@@ -43,4 +44,7 @@ class DailyWeatherModel {
       'weatherConditionEnum': weatherConditionEnum.condition,
     };
   }
+
+  @override
+  List<Object?> get props => [minTemp, maxTemp, date, weatherConditionEnum];
 }

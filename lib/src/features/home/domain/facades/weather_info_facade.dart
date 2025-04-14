@@ -42,6 +42,7 @@ class WeatherInfoFacadeImpl implements WeatherInfoFacade {
     }
 
     final Duration localCacheLifeTime = DateTime.now().difference(lastUpdate);
+
     if (localCacheLifeTime.inMinutes > 10) {
       return false;
     }

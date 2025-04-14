@@ -1,8 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:weather_forecast/src/features/home/domain/models/city_model.dart';
 import 'package:weather_forecast/src/features/home/domain/models/daily_weather_model.dart';
 import 'package:weather_forecast/src/features/home/domain/models/hourly_weather_model.dart';
 
-class WeatherModel {
+class WeatherModel extends Equatable {
   final CityModel city;
   final double currentTemp;
   final int humidity;
@@ -10,7 +11,7 @@ class WeatherModel {
   final List<HourlyWeatherModel> hourly;
   final List<DailyWeatherModel> daily;
 
-  WeatherModel({
+  const WeatherModel({
     required this.city,
     required this.currentTemp,
     required this.humidity,
@@ -83,4 +84,14 @@ class WeatherModel {
       daily: daily ?? this.daily,
     );
   }
+
+  @override
+  List<Object?> get props => [
+    city,
+    currentTemp,
+    humidity,
+    pressure,
+    hourly,
+    daily,
+  ];
 }

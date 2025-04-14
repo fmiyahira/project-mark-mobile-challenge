@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/instance_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/src/core/plugins/local_storage/local_storage.dart';
@@ -26,7 +27,15 @@ class RegisterDependencies {
   static Future<void> init() async {
     // Plugins
     final sharedPreferences = await SharedPreferences.getInstance();
-    Get.lazyPut<RequestClient>(() => RequestHttpDioImpl());
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://api.openweathermap.org/data/',
+        connectTimeout: const Duration(seconds: 5),
+        receiveTimeout: const Duration(seconds: 5),
+      ),
+    );
+
+    Get.lazyPut<RequestClient>(() => RequestClientDioImpl(dio));
     Get.lazyPut<LocalStorage>(
       () => SharedPreferencesStorage(sharedPreferences),
     );
@@ -83,8 +92,8 @@ class RegisterDependencies {
     );
 
     // Presenters
-    Get.lazyPut<WeatherPresenter>(
-      () => WeatherPresenter(weatherInfoFacade: Get.find()),
+    Get.lazyPut<IHomePresenter>(
+      () => HomePresenter(weatherInfoFacade: Get.find()),
     );
   }
 }

@@ -7,4 +7,5 @@ class HomePageStrings {
   static const String currentDay = 'Today';
   static const String errorMessage = 'Falha ao carregar dados';
   static const String tryAgain = 'Try Again';
+  static const String now = 'Now';
 }

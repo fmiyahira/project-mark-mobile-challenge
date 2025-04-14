@@ -14,7 +14,7 @@ class SliverListItemWeatherDailyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final WeatherPresenter presenter = Get.find<WeatherPresenter>();
+    final IHomePresenter presenter = Get.find<IHomePresenter>();
 
     return Obx(() {
       final WeatherModel? currentCityWeather =
