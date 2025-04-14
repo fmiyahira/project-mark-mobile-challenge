@@ -35,7 +35,7 @@ void main() {
       tester,
     ) async {
       final date = DateTime.now().add(const Duration(hours: 3));
-      final formattedTime = DateFormat('hh:mm a').format(date);
+      final formattedTime = DateFormat('ha').format(date).toLowerCase();
       final hourlyWeather = HourlyWeatherModel(
         temp: 20.0,
         date: date,
